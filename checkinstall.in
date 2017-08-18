@@ -518,9 +518,8 @@ CKNAME=`basename "$0"`
 PARAMS=`getopt -a -n $CKNAME -o +d:DA:t:RShHy -l arch:,type:,si,showinstall::,ss,showslack::,deldoc::,delspec::,deldesc::,strip::,addso::,install::,stripso::,gzman::,bk,backup::,autodoinst::,reset-uids::,fstrans::,spec:,exclude:,include:,pkgname:,pkgversion:,pkgrelease:,pkglicense:,pkggroup:,pkgsource:,pkgaltsource:,pakdir:,docdir:,requires:,recommends:,suggests:,provides:,conflicts:,replaces:,autoreqprov:,maintainer:,dpkgflags:,rpmflags:,pkgarch:,umask:,with-tar:,summary:,inspect,review-spec,review-control,newslack,help,nodoc,rpmi,rpmu,version,copyright,default -- "$@"`
 
 
-if [ $? -gt 0 ] && help_notice ; then
-    eval set -- $PARAMS
-fi
+[ $? -gt 0 ] && help_notice
+eval set -- $PARAMS
 
 while [ "$1" != "--" ]; do
    case "$1" in
@@ -2443,9 +2442,6 @@ Group:     $PKG_GROUP
 BuildRoot: $BROOTPATH
 Provides:  $PROVIDES
 Requires:  $REQUIRES,/bin/sh
-AutoReqProv: $AUTOREQPROV
-Recommends: $RECOMMENDS
-Suggests:  $SUGGESTS
 
 %description
 EOF
