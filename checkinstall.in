@@ -518,8 +518,9 @@ CKNAME=`basename "$0"`
 PARAMS=`getopt -a -n $CKNAME -o +d:DA:t:RShHy -l arch:,type:,si,showinstall::,ss,showslack::,deldoc::,delspec::,deldesc::,strip::,addso::,install::,stripso::,gzman::,bk,backup::,autodoinst::,reset-uids::,fstrans::,spec:,exclude:,include:,pkgname:,pkgversion:,pkgrelease:,pkglicense:,pkggroup:,pkgsource:,pkgaltsource:,pakdir:,docdir:,requires:,recommends:,suggests:,provides:,conflicts:,replaces:,autoreqprov:,maintainer:,dpkgflags:,rpmflags:,pkgarch:,umask:,with-tar:,summary:,inspect,review-spec,review-control,newslack,help,nodoc,rpmi,rpmu,version,copyright,default -- "$@"`
 
 
-if [ $? -gt 0 ] && help_notice
-eval set -- $PARAMS
+if [ $? -gt 0 ] && help_notice ; then
+    eval set -- $PARAMS
+fi
 
 while [ "$1" != "--" ]; do
    case "$1" in
@@ -615,7 +616,8 @@ while [ "$1" != "--" ]; do
                AUTOREQPROV="no";;
             *)
                boolean_usage "--autoreqprov" $1
-         esac
+	 esac
+	 ;;
       --recommends)
          shift
          RECOMMENDS=`eval echo $1`
@@ -1405,7 +1407,7 @@ fi
          MAINTDOMAIN=$HOSTNAME
       else
          hostname -f &> /dev/null
-         if [ $? -gt 0]; then
+         if [ $? -gt 0 ]; then
             MAINTDOMAIN="localhost"
          else
             MAINTDOMAIN=`hostname -f`
@@ -2039,7 +2041,7 @@ EOF
     echo "if ! egrep \"^/${libdir} *$\" /etc/ld.so.conf &> /dev/null; then"
     echo "   echo \"Adding \"/$libdir\" to /etc/ld.so.conf\"" 
     echo "   echo /$libdir >> /etc/ld.so.conf"
-    echo fi
+    echo "fi"
    ) >> "${DIRECTORIO_FUENTE}/postinstall-pak"
  done
 
@@ -2753,14 +2755,12 @@ fi
 
 fi
 
-;;
 
 
                        ################################
                        #  End Debian package section  #
 ##############################################################################
-
-
+;;
 esac
 
 # If we have a package repository set, move the package there
@@ -2889,7 +2889,7 @@ else
 fi
 
 
-if ! [ $FAILED -gt 0 ]; then
+if [ ! $FAILED -gt 0 ]; then
 
    if [ "${INSTALL}" = "1" ]; then
 
