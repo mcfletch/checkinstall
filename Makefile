@@ -4,7 +4,7 @@
 PREFIX=/usr/local
 BINDIR=$(PREFIX)/sbin
 LCDIR=$(PREFIX)/lib/checkinstall/locale
-CONFDIR=$(PREFIX)/lib/checkinstall
+CONFDIR=$(PREFIX)/etc
 
 all:
 	for file in locale/checkinstall-*.po ; do \
@@ -37,22 +37,8 @@ install: all
 	
 	mkdir -p $(CONFDIR)
 	install -m644  checkinstallrc-dist $(CONFDIR)
-	if ! [ -f $(CONFDIR)/checkinstallrc ]; then \
-		cp $(CONFDIR)/checkinstallrc-dist $(CONFDIR)/checkinstallrc; \
-	else \
-		echo; \
-		echo; \
-		echo ======================================================== ;\
-		echo; \
-		echo An existing checkinstallrc file has been found. ;\
-		echo The one from this distribution can be found at: ; \
-		echo; \
-		echo -e \\t$(CONFDIR)/checkinstallrc-dist ; \
-		echo; \
-		echo; \
-		echo ======================================================== ;\
-		echo; \
-	fi
+	cp -p checkinstallrc-dist checkinstallrc
+	install -m644  checkinstallrc $(CONFDIR)
 	
 clean:
 	for file in locale/checkinstall-*.mo ; do \

@@ -23,7 +23,7 @@ INSTALLWATCH=${INSTALLWATCH_PREFIX}/bin/installwatch
 # included with checkinstall. If you want to use Slackware's native "makepkg"
 # then set this to "makepkg"
 
-MAKEPKG=/sbin/makepkg
+MAKEPKG=
 
 # makepkg optional flags. These are recommended if running a newer Slackware
 # version: "-l y -c n"
@@ -49,7 +49,7 @@ ARCHITECTURE=""
 #   R : RPM
 #   D : Debian
 
-INSTYPE=""
+INSTYPE="R"
 
 # Storage directory for newly created packages
 # By default they will be stored at the default
@@ -117,7 +117,7 @@ RESET_UIDS=0
 NEW_SLACK=1
 
 # Comma delimited list of files/directories to be ignored
-EXCLUDE=""
+EXCLUDE="/selinux"
 
 # Accept default values for all questions?
 ACCEPT_DEFAULT=0
